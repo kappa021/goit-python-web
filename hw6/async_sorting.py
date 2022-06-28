@@ -49,62 +49,59 @@ async def create_new_dir(path):
 
 async def moving_files():
 
-    try:
-        main_folder = AsyncPath(sys.argv[1])
-        print(f"Sorting this folder -> {main_folder}")
-    except Exception:
-        print("Icorrect path, try again!")
+    if len(sys.argv) >1:
+        main_folder = AsyncPath(sys.argv[1:])
+        list_files = []
+        list_dirs = []
+        for root, dirs, files in os.walk(main_folder):
+            for name in files:
+                list_files.append(os.path.join(root, name))
+            for name in dirs:
+                list_dirs.append(os.path.join(root, name))
 
-    list_files = []
-    list_dirs = []
-    for root, dirs, files in os.walk(main_folder):
-        for name in files:
-            list_files.append(os.path.join(root, name))
-        for name in dirs:
-            list_dirs.append(os.path.join(root, name))
+        await create_new_dir(main_folder)
 
-    await create_new_dir(main_folder)
+        for file in list_files:
+            dir_name = os.path.dirname(file)
+            f_name = os.path.splitext(os.path.basename(file))
+            file_name = f_name[0]
+            ext = f_name[-1]
+            correct_file_name = await normalize(file_name) + ext
 
-    for file in list_files:
-        dir_name = os.path.dirname(file)
-        f_name = os.path.splitext(os.path.basename(file))
-        file_name = f_name[0]
-        ext = f_name[-1]
-        correct_file_name = await normalize(file_name) + ext
-
-        for folder in FOLDERS:
-            if folder == dir_name:
-                continue
-            try:
-                if ext in IMAGES_EXT:
-                    new_path =f"{main_folder}\\{FOLDERS[0]}\\{correct_file_name}"
-                    await aioshutil.move(file, new_path)
-                    
-                elif ext in VIDEO_EXT:
+            for folder in FOLDERS:
+                if folder == dir_name:
+                    continue
+                try:
+                    if ext in IMAGES_EXT:
+                        new_path =f"{main_folder}\\{FOLDERS[0]}\\{correct_file_name}"
+                        await aioshutil.move(file, new_path)
+                            
+                    elif ext in VIDEO_EXT:
                         new_path = f"{main_folder}\\{FOLDERS[1]}\\{correct_file_name}"
                         await aioshutil.move(file, new_path)
 
-                elif ext in DOCUMENTS_EXT:
+                    elif ext in DOCUMENTS_EXT:
                         new_path = f"{main_folder}\\{FOLDERS[2]}\\{correct_file_name}"
                         await aioshutil.move(file, new_path)
 
-                elif ext in AUDIO_EXT:
+                    elif ext in AUDIO_EXT:
                         new_path = f"{main_folder}\\{FOLDERS[3]}\\{correct_file_name}"
                         await aioshutil.move(file, new_path)
-        
-                elif ext in ARCHIVES_EXT:
+                
+                    elif ext in ARCHIVES_EXT:
                         new_path = f"{main_folder}\\{FOLDERS[4]}\\{correct_file_name}"
                         archive_dir = os.mkdir(f"{main_folder}\\{FOLDERS[4]}\\{file_name}")
                         await aioshutil.unpack_archive(file, archive_dir, ext.replace('.', ''))
                         await aioshutil.move(file, new_path)
 
-                else:
-                    new_path = f"{main_folder}\\{FOLDERS[5]}\\{correct_file_name}"
-                    await aioshutil.move(file, new_path)
+                    else:
+                        new_path = f"{main_folder}\\{FOLDERS[5]}\\{correct_file_name}"
+                        await aioshutil.move(file, new_path)
 
-            except FileNotFoundError:
-                continue
-
+                except FileNotFoundError:
+                    continue
+    else:
+        print("Path does not exist, try again!")
 
 if __name__ == "__main__":
     asyncio.run(moving_files())
