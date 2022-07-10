@@ -7,6 +7,7 @@ def chat_server(host, port):
     with socket.socket() as soc:
         soc.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         soc.bind((host, port))
+        print(f"{host}|{port} is waiting for connection...")
         soc.listen(5)
         while True:
             conn, addr = soc.accept()
