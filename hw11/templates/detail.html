@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail record</title>
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    />
+</head>
+<body>
+    <main class="container">
+        <nav style="margin-bottom: 20px; border-bottom: 2px solid; padding-left: 30px">
+            <ul>
+                <li><a href="/" role="button">Back to main menu</a></li>
+            </ul>
+        </nav>
+        <h1>{{record.name.capitalize()}}</h1>
+        <p>Description: <kbd>{{record.description}}</kbd></p>
+        <p>Day of Birthday: <kbd>{{record.birthday}}</kbd></p>
+        <p>Address: <kbd>{{record.address}}</kbd></p>
+        <p>Phone: <kbd>{{record.phone.value}}</kbd></p>
+        <p>Email: <kbd>{{record.email.value}}</kbd></p>
+    </main>
+</body>
+</html>

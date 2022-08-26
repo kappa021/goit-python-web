@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addressbook</title>
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    />
+</head>
+<body>
+    <main class="container">
+        <nav style="margin-bottom: 20px; border-bottom: 2px solid; padding-left: 30px">
+            <ul>
+                <li> <a href="/record/" role="button"> Add Record </a></li>
+            </ul>
+        </nav>
+  
+        {% for record in records %}
+        <ul>
+            <li>
+                <a href="/detail/{{record.id}}" role="button" class="outline" > {{record.name.capitalize()}} </a>
+                <a href="/delete/{{record.id}}" role="button" class="contrast" > Delete record </a>
+            </li>
+        </ul>
+        {% endfor %}
+    </main>
+</body>
+</html>
