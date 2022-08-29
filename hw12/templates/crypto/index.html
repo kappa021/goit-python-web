@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="table-wrapper">
+        <table border="1" bordercolor="lightgrey" class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>Source</th>
+                <th><div class="wrap_l">
+                    <img height="30" src="https://myfin.by/images/cryptoCurrency/btc.png" alt="">
+                    <span class="wrap_text"><span>Bitcoin</span>
+                </div></th>
+                <th><div class="wrap_l">
+                    <img height="30" src="https://myfin.by/images/cryptoCurrency/eth.png" alt="">
+                    <span class="wrap_text"><span>Ethereum</span>
+                </div></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>bitstat.top</td>
+                {% if not rates_bitstat['bitcoin'] %}
+                <td>No data</td>
+                {% else %}
+                <td>{{ rates_bitstat['bitcoin'] }} $</td>
+                {% endif %}
+    
+                {% if not rates_bitstat['ethereum'] %}
+                <td>No data</td>
+                {% else %}
+                <td>{{ rates_bitstat['ethereum'] }} $</td>
+                {% endif %}
+    
+            </tr>    
+            <tr>
+                <td>myfin.by</td>
+                {% if not rates_myfin['bitcoin'] %}
+                <td>No data</td>
+                {% else %}
+                <td>{{ rates_myfin['bitcoin'] }} $</td>
+                {% endif %}
+
+                {% if not rates_myfin['ethereum'] %}
+                <td>No data</td>
+                {% else %}
+                <td>{{ rates_myfin['ethereum'] }} $</td>
+                {% endif %}
+
+            </tr>
+            <tr>
+                <td>bitinfocharts.com</td>
+                {% if not rates_bitinfo['bitcoin'] %}
+                <td>No data</td>
+                {% else %}
+                <td>{{ rates_bitinfo['bitcoin'] }} $</td>
+                {% endif %}
+
+                {% if not rates_bitinfo['ethereum'] %}
+                <td>No data</td>
+                {% else %}
+                <td>{{ rates_bitinfo['ethereum'] }} $</td>
+                {% endif %}
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

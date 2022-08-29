@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<title>{% block title %}{% endblock %} - Cryptocurrency prices</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<section class="content">
+    <img class="logo" src="{{ url_for('static', filename='large.png') }}" alt="">
+
+
+    {% block content %}
+
+    {% endblock %}
+</section>
